@@ -123,8 +123,23 @@ document.addEventListener( "DOMContentLoaded" ,() => {
              : titleDisplacement + 180;
         }
 
+        if (descriptionDisplacement === 0 && direction === "prev") {
+            descriptionDisplacement = -165;
+
+        }
+        else if(descriptionDisplacement === -165 && direction === "next"){
+            descriptionDisplacement = 0;
+        }
+        else {
+         descriptionDisplacement = 
+            direction === "next"
+                ? descriptionDisplacement - 55 
+                : descriptionDisplacement + 55;
+        }
+
         
         let title = document.querySelectorAll("#title h4");
+        let description = document.querySelectorAll("#description p");
 
         title.forEach(title => {
             TweenMax.to(title, 1, {
@@ -132,8 +147,21 @@ document.addEventListener( "DOMContentLoaded" ,() => {
                 ease: Strong.easeInOut
             });
         });
+
+
+        description.forEach((description, index) => {
+            let opacity = 0;
+            if(index === currentIndex) {
+                opacity = 1;
+            } else {
+                opacity = 0;
+            }
+            TweenMax.to(description, 1, {
+                top: `${descriptionDisplacement}px`,
+                ease: Strong.easeInOut,
+                opacity: opacity
+            });
+        })
     }
-
-
 
 });
